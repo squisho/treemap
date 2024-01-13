@@ -28,7 +28,7 @@ const onHover = useCallback(event => {
   // console.log("feature",hoveredFeature);
 
   setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
-  // hoverInfo && console.log("HINFO",hoverInfo.feature.properties)
+  hoverInfo && console.log("HINFO",hoverInfo.feature.properties)
 });
 
   return (
@@ -53,8 +53,9 @@ const onHover = useCallback(event => {
       </Source>
       {hoverInfo && (
         <div className="tooltip" style={{left:hoverInfo.x, top:hoverInfo.y}}>
-          <div> DATA: {hoverInfo.feature.properties.CUT_BLOCK_FOREST_FILE_ID}</div>
-          <div> DATA: {hoverInfo.feature.properties.CLIENT_NAME}</div>
+          <div> CLIENT: {hoverInfo.feature.properties.CLIENT_NAME}</div>
+          <div> PLANNED LOGGING DATE: {hoverInfo.feature.properties.PLANNED_HARVEST_DATE}</div>
+          <div> LOGGING: {hoverInfo.feature.properties.LIFE_CYCLE_STATUS_CODE + " " + (hoverInfo.feature.properties.DISTURBANCE_END_DATE || "")}</div>
         </div>
       )}
       </Map>
