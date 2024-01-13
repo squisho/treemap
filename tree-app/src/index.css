@@ -12,9 +12,18 @@ code {
     monospace;
 }
 .map-container {
-  height: 1080px;
-  width: 1920px;
+  height: 100vh;
+  width: 100vw;
   }
 
-document.body.style {
-background: red;}
+.tooltip {
+  position: absolute;
+  margin: 8px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+  font-size: 10px;
+  z-index: 9;
+  pointer-events: none;
+}

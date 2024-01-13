@@ -1,0 +1,3 @@
+Filter by planned harvest date: 
+mapshaper CUT_BLOCK_POLY_10pc.geojson -filter "PLANNED_HARVEST_DATE>20180000" -o CUT_BLOCK_SINCE_2018.json -verbose
+

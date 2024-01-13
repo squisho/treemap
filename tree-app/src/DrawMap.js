@@ -1,20 +1,35 @@
-import logo from './logo.svg';
-import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import React, { useCallback, useState } from 'react';
+import mapboxgl from '!mapbox-gl'; 
 import Map, {Source, Layer} from "react-map-gl";
-import data from "./data/DATA.json";
+// import data from "./data/CUT_BLOCK_POLY_10pc.geojson";
+import data from "./data/CUT_BLOCK_SINCE_2018.json";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3F1aXNobyIsImEiOiJjbGkxeHU2cnMwYWRqM3NudDEyajNycjJiIn0.lFUtNuCGMS3D_HaZpHiLAg';
 
 function DrawMap() {
 
+const [hoverInfo, setHoverInfo] = useState(null);
+
 const layerStyle = {
   id:"cutblock",
   type:"fill",
   paint:{
-    "fill-color":"blue"
+    "fill-color":"red",
+    "fill-opacity":0.5
   }
 }
+
+const onHover = useCallback(event => {
+  const {
+    features,
+    point: {x, y}
+  } = event;
+  const hoveredFeature = features && features[0];
+  // console.log("feature",hoveredFeature);
+
+  setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
+  // hoverInfo && console.log("HINFO",hoverInfo.feature.properties)
+});
 
   return (
     <div className="App">
@@ -26,15 +41,22 @@ const layerStyle = {
     longitude: -121.9573,
       zoom: 8
     }}
-    mapStyle="mapbox://styles/mapbox/light-v9"
+    mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
     mapboxAccessToken={mapboxgl.accessToken}
-    style={{width: 900, height:400}}
-    className="map-container" >
+    style={{width: "100vw", height:"100vh"}}
+    className="map-container"
+    interactiveLayerIds={['cutblock']}
+    onMouseMove={onHover} >
 
       <Source type="geojson" data={data}>
         <Layer {...layerStyle} />
       </Source>
-
+      {hoverInfo && (
+        <div className="tooltip" style={{left:hoverInfo.x, top:hoverInfo.y}}>
+          <div> DATA: {hoverInfo.feature.properties.CUT_BLOCK_FOREST_FILE_ID}</div>
+          <div> DATA: {hoverInfo.feature.properties.CLIENT_NAME}</div>
+        </div>
+      )}
       </Map>
     </div>
       );
