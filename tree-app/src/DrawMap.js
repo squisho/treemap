@@ -3,6 +3,7 @@ import mapboxgl from '!mapbox-gl';
 import Map, {Source, Layer} from "react-map-gl";
 // import data from "./data/CUT_BLOCK_POLY_10pc.geojson";
 import data from "./data/CUT_BLOCK_SINCE_2018.json";
+import park_data from "./data/PARKS_POLY.geojson";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3F1aXNobyIsImEiOiJjbGkxeHU2cnMwYWRqM3NudDEyajNycjJiIn0.lFUtNuCGMS3D_HaZpHiLAg';
 
@@ -16,6 +17,15 @@ const layerStyle = {
   paint:{
     "fill-color":"red",
     "fill-opacity":0.5
+  }
+}
+
+const parkLayerStyle = {
+  id:"parks",
+  type:"fill",
+  paint:{
+    "fill-color":"lightgreen",
+    "fill-opacity":0.3
   }
 }
 
@@ -50,6 +60,9 @@ const onHover = useCallback(event => {
 
       <Source type="geojson" data={data}>
         <Layer {...layerStyle} />
+      </Source>
+      <Source type="geojson" data={park_data}>
+        <Layer {...parkLayerStyle}/>
       </Source>
       {hoverInfo && (
         <div className="tooltip" style={{left:hoverInfo.x, top:hoverInfo.y}}>
