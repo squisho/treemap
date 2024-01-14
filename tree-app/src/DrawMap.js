@@ -4,6 +4,7 @@ import Map, {Source, Layer} from "react-map-gl";
 // import data from "./data/CUT_BLOCK_POLY_10pc.geojson";
 import data from "./data/CUT_BLOCK_SINCE_2018.json";
 import park_data from "./data/PARKS_POLY.geojson";
+import national_park_data from "./data/NATL_PARKS_POLY.geojson";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3F1aXNobyIsImEiOiJjbGkxeHU2cnMwYWRqM3NudDEyajNycjJiIn0.lFUtNuCGMS3D_HaZpHiLAg';
 
@@ -28,6 +29,14 @@ const parkLayerStyle = {
     "fill-opacity":0.3
   }
 }
+const nparkLayerStyle = {
+  id:"nparks",
+  type:"fill",
+  paint:{
+    "fill-color":"lightyellow",
+    "fill-opacity":0.3
+  }
+}
 
 const onHover = useCallback(event => {
   const {
@@ -40,7 +49,6 @@ const onHover = useCallback(event => {
   setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
   hoverInfo && console.log("HINFO",hoverInfo.feature.properties)
 });
-
   return (
     <div className="App">
 
@@ -52,17 +60,22 @@ const onHover = useCallback(event => {
       zoom: 8
     }}
     mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+
     mapboxAccessToken={mapboxgl.accessToken}
     style={{width: "100vw", height:"100vh"}}
     className="map-container"
     interactiveLayerIds={['cutblock']}
     onMouseMove={onHover} >
 
-      <Source type="geojson" data={data}>
-        <Layer {...layerStyle} />
-      </Source>
+{
       <Source type="geojson" data={park_data}>
         <Layer {...parkLayerStyle}/>
+      </Source> }
+      <Source type="geojson" data={national_park_data}>
+        <Layer {...nparkLayerStyle}/>
+      </Source>
+      <Source type="geojson" data={data}>
+        <Layer {...layerStyle} />
       </Source>
       {hoverInfo && (
         <div className="tooltip" style={{left:hoverInfo.x, top:hoverInfo.y}}>
