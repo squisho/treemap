@@ -1,10 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import mapboxgl from '!mapbox-gl'; 
 import Map, {Source, Layer} from "react-map-gl";
-// import data from "./data/CUT_BLOCK_POLY_10pc.geojson";
 import data from "./data/CUT_BLOCK_SINCE_2018.json";
-import park_data from "./data/PARKS_POLY.geojson";
-import national_park_data from "./data/NATL_PARKS_POLY.geojson";
+import comb_data from "./data/PARKS_COMBINED_POLY.geojson";
+
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3F1aXNobyIsImEiOiJjbGkxeHU2cnMwYWRqM3NudDEyajNycjJiIn0.lFUtNuCGMS3D_HaZpHiLAg';
 
@@ -29,15 +28,6 @@ const parkLayerStyle = {
     "fill-opacity":0.3
   }
 }
-const nparkLayerStyle = {
-  id:"nparks",
-  type:"fill",
-  paint:{
-    "fill-color":"lightyellow",
-    "fill-opacity":0.3
-  }
-}
-
 const onHover = useCallback(event => {
   const {
     features,
@@ -68,12 +58,9 @@ const onHover = useCallback(event => {
     onMouseMove={onHover} >
 
 {
-      <Source type="geojson" data={park_data}>
+      <Source type="geojson" data={comb_data}>
         <Layer {...parkLayerStyle}/>
       </Source> }
-      <Source type="geojson" data={national_park_data}>
-        <Layer {...nparkLayerStyle}/>
-      </Source>
       <Source type="geojson" data={data}>
         <Layer {...layerStyle} />
       </Source>
