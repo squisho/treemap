@@ -15,17 +15,34 @@ const layerStyle = {
   id:"cutblock",
   type:"fill",
   paint:{
-    "fill-color":"red",
+    "fill-color":[
+      "match", ['get', "LIFE_CYCLE_STATUS_CODE"],
+      "ACTIVE",'red',
+      "RETIRED", 'yellow',
+      "#FFF"
+    ],
     "fill-opacity":0.5
   }
 }
 
+// const parkLayerStyle = {
+//   id:"parks",
+//   type:"line",
+//   paint:{
+//     "line-width": 1,
+//     "line-color": "lightgreen",
+//     "fill-color":"RED",
+//     "fill-opacity":0.2
+//   }
+// }
 const parkLayerStyle = {
   id:"parks",
   type:"fill",
   paint:{
     "fill-color":"lightgreen",
-    "fill-opacity":0.3
+    "line-width": 4,
+    "fill-opacity":0.2,
+    "fill-outline-color": "lightgreen"
   }
 }
 const onHover = useCallback(event => {
