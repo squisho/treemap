@@ -9,6 +9,15 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3F1aXNobyIsImEiOiJjbGkxeHU2cnMwYWRqM3NudDEya
 
 function DrawMap() {
 
+// const [map, setMap] = useState(null);
+
+// useEffect(()=>{
+//   console.log("MAP OBJ: ", map)
+// }, [map])
+// const onMapLoad = (map) => {
+//   setMap(map);
+// }
+
 const [hoverInfo, setHoverInfo] = useState(null);
 
 const layerStyle = {
@@ -18,23 +27,28 @@ const layerStyle = {
     "fill-color":[
       "match", ['get', "LIFE_CYCLE_STATUS_CODE"],
       "ACTIVE",'red',
-      "RETIRED", 'yellow',
+      "RETIRED", 'black',
       "#FFF"
     ],
     "fill-opacity":0.5
   }
 }
 
-// const parkLayerStyle = {
-//   id:"parks",
-//   type:"line",
-//   paint:{
-//     "line-width": 1,
-//     "line-color": "lightgreen",
-//     "fill-color":"RED",
-//     "fill-opacity":0.2
-//   }
-// }
+const layerOutlineStyle = {
+  id:"cutblock_outlines",
+  type:"line",
+  paint:{
+    "line-color":[
+      "match", ['get', "LIFE_CYCLE_STATUS_CODE"],
+      "ACTIVE",'red',
+      "RETIRED", 'red',
+      "#FFF"
+    ],
+    "line-opacity":1,
+    "line-width":2
+  }
+}
+
 const parkLayerStyle = {
   id:"parks",
   type:"fill",
@@ -72,7 +86,10 @@ const onHover = useCallback(event => {
     style={{width: "100vw", height:"100vh"}}
     className="map-container"
     interactiveLayerIds={['cutblock']}
-    onMouseMove={onHover} >
+    onMouseMove={onHover}
+    // onLoad={el => onMapLoad(el)}
+    // onZoom={console.log("zoomed",map)}
+    >
 
 {
       <Source type="geojson" data={comb_data}>
@@ -80,6 +97,9 @@ const onHover = useCallback(event => {
       </Source> }
       <Source type="geojson" data={data}>
         <Layer {...layerStyle} />
+      </Source>
+      <Source type='geojson' data={data}>
+        <Layer {...layerOutlineStyle} />
       </Source>
       {hoverInfo && (
         <div className="tooltip" style={{left:hoverInfo.x, top:hoverInfo.y}}>
