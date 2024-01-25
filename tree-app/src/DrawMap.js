@@ -1,13 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import mapboxgl from '!mapbox-gl'; 
+import React, { useCallback, useState } from 'react'; 
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { NavigationControl } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import Map, {Source, Layer} from "react-map-gl";
 import data from "./data/CUT_BLOCK_SINCE_2018.json";
 import comb_data from "./data/PARKS_COMBINED_POLY.geojson";
 
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoic3F1aXNobyIsImEiOiJjbGkxeHU2cnMwYWRqM3NudDEyajNycjJiIn0.lFUtNuCGMS3D_HaZpHiLAg';
-
 function DrawMap() {
+  
+  mapboxgl.accessToken = 'pk.eyJ1Ijoic3F1aXNobyIsImEiOiJjbGkxeHU2cnMwYWRqM3NudDEyajNycjJiIn0.lFUtNuCGMS3D_HaZpHiLAg';
 
 // const [map, setMap] = useState(null);
 
@@ -71,7 +73,6 @@ const onHover = useCallback(event => {
   hoverInfo && console.log("HINFO",hoverInfo.feature.properties)
 });
   return (
-    <div className="App">
 
     <Map initialViewState={{
     //latitude: 48.45,
@@ -81,20 +82,18 @@ const onHover = useCallback(event => {
       zoom: 8
     }}
     mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-
     mapboxAccessToken={mapboxgl.accessToken}
     style={{width: "100vw", height:"100vh"}}
     className="map-container"
     interactiveLayerIds={['cutblock']}
     onMouseMove={onHover}
-    // onLoad={el => onMapLoad(el)}
-    // onZoom={console.log("zoomed",map)}
     >
 
-{
+      <NavigationControl position="top-right" visualizePitch={true}/>
+
       <Source type="geojson" data={comb_data}>
         <Layer {...parkLayerStyle}/>
-      </Source> }
+      </Source>
       <Source type="geojson" data={data}>
         <Layer {...layerStyle} />
       </Source>
@@ -108,8 +107,8 @@ const onHover = useCallback(event => {
           <div> LOGGING: {hoverInfo.feature.properties.LIFE_CYCLE_STATUS_CODE + " " + (hoverInfo.feature.properties.DISTURBANCE_END_DATE || "")}</div>
         </div>
       )}
+
       </Map>
-    </div>
       );
     }
 
