@@ -5,7 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import Map, {Source, Layer} from "react-map-gl";
 import data from "./data/CUT_BLOCK_SINCE_2018.json";
 import comb_data from "./data/PARKS_COMBINED_POLY.geojson";
-import Email from './Email';
+import InfoCard from './InfoCard';
 
 
 function DrawMap() {
@@ -22,6 +22,7 @@ function DrawMap() {
 // }
 
 const [hoverInfo, setHoverInfo] = useState(null);
+const [selected, setSelected] = useState(false);
 
 const layerStyle = {
   id:"cutblock",
@@ -71,16 +72,21 @@ const onHover = useCallback(event => {
   // console.log("feature",hoveredFeature);
 
   setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
-  hoverInfo && console.log("HINFO",hoverInfo.feature.properties)
 });
+
+const onClick = () => {
+  hoverInfo && setSelected(hoverInfo);
+}
+
+
   return (
 <>
     <Map initialViewState={{
     //latitude: 48.45,
     //longitude: -123.4,
-    latitude: 52.7083,
-    longitude: -121.9573,
-      zoom: 8
+    latitude: 48.473604,
+    longitude: -124.101219,
+      zoom: 12
     }}
     mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
     mapboxAccessToken={mapboxgl.accessToken}
@@ -88,6 +94,7 @@ const onHover = useCallback(event => {
     className="map-container"
     interactiveLayerIds={['cutblock']}
     onMouseMove={onHover}
+    onClick={onClick}
     >
 
       <NavigationControl position="top-right" visualizePitch={true}/>
@@ -110,7 +117,7 @@ const onHover = useCallback(event => {
       )}
 
       </Map>
-      <Email></Email>
+      <InfoCard data={{selected}}></InfoCard>
       </>
       );
     }
