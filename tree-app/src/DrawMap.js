@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import Map, {Source, Layer} from "react-map-gl";
 import data from "./data/CUT_BLOCK_SINCE_2018.json";
 import comb_data from "./data/PARKS_COMBINED_POLY.geojson";
+import Email from './Email';
 
 
 function DrawMap() {
@@ -73,7 +74,7 @@ const onHover = useCallback(event => {
   hoverInfo && console.log("HINFO",hoverInfo.feature.properties)
 });
   return (
-
+<>
     <Map initialViewState={{
     //latitude: 48.45,
     //longitude: -123.4,
@@ -109,6 +110,8 @@ const onHover = useCallback(event => {
       )}
 
       </Map>
+      <Email></Email>
+      </>
       );
     }
 
