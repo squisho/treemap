@@ -3,8 +3,9 @@ import React, { } from 'react';
 // import { useState } from 'react';
 
 function InfoCard({data}) {
-
-    // data.selected && console.log(data.selected.feature.properties);
+    
+    data.selected && console.log(data.selected.feature.properties);
+    const properties = data.selected ? data.selected.feature.properties : null;
 
 // const [details, setDetails] = useState(null)
 // console.log(details)
@@ -18,6 +19,15 @@ function InfoCard({data}) {
 //         setDetails(data)
 //     }).catch(err => {console.log(err)})
 // }
+
+function getDate(date){
+    const yr = date.slice(0, 4);
+    const mth = date.slice(4, 6);
+    const day = date.slice(6, 8);
+    console.log(yr, mth, day);
+    
+    return new Date(yr, mth, day).toDateString();
+}
 
     return (
         // <div className="email-form">
@@ -36,14 +46,22 @@ function InfoCard({data}) {
         //         ))}
         //     </div>
         // </div>
+        <>
+        {data.selected &&  (
         <div className="infoCard">
-            <p>tests</p>
-            {data.selected && (
-                <div>
-                    {data.selected.feature.properties.PLANNED_HARVEST_DATE}
-                </div>
-            )}
+            <div>
+                <b>Client: {data.selected.feature.properties.CLIENT_NAME}</b>
+            </div>
+            <div>
+                Activity: {properties.LIFE_CYCLE_STATUS_CODE}
+            </div>
+            <div>
+                Harvest Date: {getDate(properties.PLANNED_HARVEST_DATE)}
+            </div>
+          
         </div>
+        )}
+        </>
     )
 
 
