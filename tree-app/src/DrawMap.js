@@ -6,7 +6,6 @@ import Map, {Source, Layer} from "react-map-gl";
 import data from "./data/CUT_BLOCK_SINCE_2018.json";
 import comb_data from "./data/PARKS_COMBINED_POLY.geojson";
 import InfoCard from './InfoCard';
-import geojsonvt from 'geojson-vt';
 
 function DrawMap() {
   
@@ -22,9 +21,11 @@ function DrawMap() {
 // const onMapLoad = (map) => {
 //   setMap(map);
 // }
-var tileIndex =  geojsonvt(data);
-console.log(tileIndex.tileCoords)
-
+// var tileIndex =  geojsonvt(data);
+// console.log(tileIndex.getTile(0, 0, 0))
+// const getTile = (z, x, y) => {
+//   return tileIndex.getTile(z, x, y).features || null;
+// }
 
 const [hoverInfo, setHoverInfo] = useState(null);
 const [selected, setSelected] = useState(false);
@@ -83,6 +84,8 @@ const onClick = () => {
   hoverInfo && setSelected(hoverInfo);
 }
 
+
+
   return (
 <>
     <Map initialViewState={{
@@ -109,9 +112,6 @@ const onClick = () => {
       <Source type="geojson" data={data}>
         <Layer {...layerStyle} />
         <Layer {...layerOutlineStyle} />
-      </Source>
-      <Source type="vector" tiles={tileIndex.getTile().features}>
-      <Layer />
       </Source>
       {hoverInfo && (
         <div className="tooltip" style={{left:hoverInfo.x, top:hoverInfo.y}}>
