@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/%7Btreemap%7D/static/css/main.8a5e2f5a.css",
+    "main.js": "/%7Btreemap%7D/static/js/main.a55c016a.js",
+    "static/media/PARKS_COMBINED_POLY.geojson": "/%7Btreemap%7D/static/media/PARKS_COMBINED_POLY.1ed6a52e94303913e0b5.geojson",
+    "index.html": "/%7Btreemap%7D/index.html",
+    "main.8a5e2f5a.css.map": "/%7Btreemap%7D/static/css/main.8a5e2f5a.css.map",
+    "main.a55c016a.js.map": "/%7Btreemap%7D/static/js/main.a55c016a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8a5e2f5a.css",
+    "static/js/main.a55c016a.js"
+  ]
+}
